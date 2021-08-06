@@ -1,5 +1,5 @@
 {
-  "name": "drboiler",
+  "name": "mainstbets",
   "version": "1.0.0",
   "description": "djangoreactboiler",
   "main": "index.js",
@@ -23,5 +23,13 @@
   "dependencies": {
     "axios": "^0.21.1",
     "package.json": "^2.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chung-ejy/mainstbets.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chung-ejy/mainstbets/issues"
+  },
+  "homepage": "https://github.com/chung-ejy/mainstbets#readme"
 }
