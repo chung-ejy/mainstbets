@@ -31,6 +31,9 @@ const Stocks = () => {
                             </h1>
                             <Sentiment prediction={prediction} />
                             <Form prediction={prediction}/>
+                            <h3 className="text-center mx-2">
+                                Input a SP500 ticker
+                            </h3>
                         </Fragment>
 
                     )

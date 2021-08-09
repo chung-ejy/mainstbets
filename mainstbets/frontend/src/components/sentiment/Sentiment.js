@@ -8,12 +8,12 @@ const Sentiment = ({prediction}) => {
                 <i className={`fas fa-${prediction.delta >=0 ? "angle-double-up": "angle-double-down"
                 } text-${color} fa-7x`} />
             </h3>
-            <h3 className={`text-center mt-3`}>
-                {"prediction: "}
+            <h1 className={`text-center mt-3`}>
+                {/* {"prediction: "} */}
                 <span className={`text-${color}`}>
                     {`${prediction.delta}%`}
                 </span>
-            </h3>
+            </h1>
         </div>
     )
 }

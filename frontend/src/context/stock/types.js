@@ -1,6 +1,0 @@
-export const SET_LOADING = "SET_LOADING"
-export const CLEAR_ERROR = "CLEAR_ERROR"
-export const SET_ERROR = "CLEAR_ERROR"
-export const STOP_LOADING = "STOP_LOADING"
-export const SET_TICKER = "SET_TEXT"
-export const GET_PREDICTION = "GET_PREDICTION"

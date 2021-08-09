@@ -4,7 +4,7 @@
   "description": "djangoreactboiler",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development --watch ./frontend/src/index.js --output-path ./frontend/static/frontend/"
+    "dev": "webpack --mode development --watch ./mainstbets/frontend/src/index.js --output-path ./mainstbets/frontend/static/frontend/"
   },
   "author": "Eric Chung",
   "license": "MIT",

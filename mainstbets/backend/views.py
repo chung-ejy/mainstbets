@@ -19,6 +19,7 @@ db = client["project_strategy"]
 table = db["application_stock_categories"]
 data = table.find(show_record_id=False)
 categories =  pd.DataFrame(list(data))
+categories["prediction"] = ["None" if x not in categories["prediction"].unique()[1:] else x for x in categories["prediction"]]
 table = db["models"]
 data = table.find(show_record_id=False)
 models =  pd.DataFrame(list(data))
