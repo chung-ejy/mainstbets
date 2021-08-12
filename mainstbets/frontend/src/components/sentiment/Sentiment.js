@@ -9,7 +9,7 @@ const Sentiment = ({prediction}) => {
                 } text-${color} fa-7x`} />
             </h3>
             <h1 className={`text-center mt-3`}>
-                {/* {"prediction: "} */}
+                {"Weekly Gains: "}
                 <span className={`text-${color}`}>
                     {`${prediction.delta}%`}
                 </span>
