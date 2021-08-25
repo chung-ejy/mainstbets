@@ -3,4 +3,6 @@ node_modules/
 */sec/*
 *.env*
 *__pycache__*
+*/__pycache__/*
 *.ipynb_checkpoints*
+*db.sqlite3*

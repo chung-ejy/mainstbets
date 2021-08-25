@@ -6,70 +6,45 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime, timedelta
 from pymongo import MongoClient
-from dotenv import load_dotenv
-import requests
-import os
-load_dotenv()
-token = os.getenv("TIINGO")
 # Create your views here.
 
 ## initial loading
 client = MongoClient("localhost",27017)
-db = client["project_strategy"]
-table = db["application_stock_categories"]
+db = client["mainstbets"]
+table = db["recent"]
 data = table.find(show_record_id=False)
-categories =  pd.DataFrame(list(data))
-categories["prediction"] = ["None" if x not in categories["prediction"].unique()[1:] else x for x in categories["prediction"]]
-table = db["models"]
+ts = pd.DataFrame(list(data)).drop("_id",axis=1)[["date","ticker","adjClose","rolling","gain"]]
+
+table = db["sp500"]
 data = table.find(show_record_id=False)
-models =  pd.DataFrame(list(data))
+sector_list = pd.DataFrame(list(data)).drop("_id",axis=1)[["Symbol","Security","GICS Sector"]]
 client.close()
-models["model"] = [pickle.loads(x) for x in models["model"]]
-quarter = datetime.now().month // 3 + 1
-year = datetime.now().year
 
 @csrf_exempt
-def backendView(request):
+def timeseries(request):
+    complete = {}
+    complete["table"] = list(ts.to_dict("records"))
+    return JsonResponse(complete,safe=False)
+
+@csrf_exempt
+def sectors(request):
+    complete = {}
+    print(sector_list.columns)
+    complete["sectors"] = list(sector_list.to_dict("records"))
+    return JsonResponse(complete,safe=False)
+
+@csrf_exempt
+def stock(request):
     data = json.loads(request.body.decode("utf-8"))
     try:
         ticker = data["ticker"]
-        ticker_category = categories[(categories["ticker"]==ticker) & (categories["year"] == year) & (categories["quarter"]==quarter)]
-        number_of_training_weeks = 14
-        start = (datetime.now() - timedelta(days=(number_of_training_weeks + 1)*7)).strftime("%Y-%m-%d")
-        end = datetime.now().strftime("%Y-%m-%d")
-        model = models[models["category"]==ticker_category["prediction"].item()].tail(1)
-        headers = {
-            "Content-Type":"application/json"
-        }
-
-        params = {
-            "token":token,
-            "startDate":start,
-            "endDate":end
-        }
-        url = f"https://api.tiingo.com/tiingo/daily/{ticker}/prices"
-        requestResponse = requests.get(url,headers=headers,params=params)
-        ticker_data =  pd.DataFrame(requestResponse.json())
+        db = client["mainstbets"]
+        table = db["full"]
+        data = table.find({"ticker":ticker},show_record_id=False)
+        ticker_data = pd.DataFrame(list(data)).drop("_id",axis=1)
+        complete = {}
+        complete["ticker_data"] = list(ticker_data.to_dict("records"))
     except Exception as e:
-        complete = {"ticker":"getrekt","prediction":0,"adjClose":0,"score":0,"delta":0}
-    try:
-        ticker_data["date"] = pd.to_datetime(ticker_data["date"])
-        ticker_data["year"] = [x.year for x in ticker_data["date"]]
-        ticker_data["quarter"] = [x.quarter for x in ticker_data["date"]]
-        ticker_data["week"] = [x.week for x in ticker_data["date"]]
-        weekly = ticker_data.groupby(["year","quarter","week"]).mean().reset_index()
-        for i in range(number_of_training_weeks):
-            weekly[i] = weekly["adjClose"].shift(1)
-        weekly["y"] = weekly["adjClose"].shift(-1)
-        weekly.dropna(inplace=True)
-        weekly["ticker"] = ticker
-        for i in range(number_of_training_weeks):
-            weekly.rename(columns={i:str(i)},inplace=True)
-        X = weekly[[str(x) for x in range(number_of_training_weeks)]].tail(1)
-        current = ticker_data.tail(1)["adjClose"].item()
-        prediction = model["model"].item().predict(X)[0]
-        score = model["score"].item()
-        complete = {"ticker":ticker,"adjClose":current,"prediction":float(round(prediction,2)),"delta":float(round(((prediction-current)/current)*100,2)),"score":float(round(score*100,2))}
-    except:
-        complete = {"ticker":"getrekt","prediction":0,"adjClose":0,"score":0,"delta":0}
+        print(str(e))
+        complete = {"ticker_data":[]}
     return JsonResponse(complete,safe=False)
