@@ -23,7 +23,7 @@ client.close()
 @csrf_exempt
 def timeseries(request):
     complete = {}
-    complete["table"] = list(ts.to_dict("records"))
+    complete["timeseries"] = list(ts.to_dict("records"))
     return JsonResponse(complete,safe=False)
 
 @csrf_exempt
@@ -43,8 +43,8 @@ def stock(request):
         data = table.find({"ticker":ticker},show_record_id=False)
         ticker_data = pd.DataFrame(list(data)).drop("_id",axis=1)
         complete = {}
-        complete["ticker_data"] = list(ticker_data.to_dict("records"))
+        complete["stock"] = list(ticker_data.to_dict("records"))
     except Exception as e:
         print(str(e))
-        complete = {"ticker_data":[]}
+        complete = {"stock":[]}
     return JsonResponse(complete,safe=False)

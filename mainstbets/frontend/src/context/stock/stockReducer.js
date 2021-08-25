@@ -1,4 +1,4 @@
-import { GET_PREDICTION, SET_TICKER, SET_LOADING, STOP_LOADING, SET_ERROR, CLEAR_ERROR } from "./types";
+import { GET_TIMESERIES, GET_STOCK, GET_SECTORS, SET_LOADING, STOP_LOADING, SET_ERROR, CLEAR_ERROR } from "./types";
 export default(state,action) => {
     switch(action.type) {
         case SET_ERROR:
@@ -16,15 +16,22 @@ export default(state,action) => {
                 ...state,
                 loading:true
             }
-        case SET_TICKER:
+        case GET_TIMESERIES:
             return {
                 ...state,
-                ticker:action.payload
+                timeseries:action.payload.timeseries,
+                loading:false
             }
-        case GET_PREDICTION:
+        case GET_STOCK:
             return {
                 ...state,
-                prediction:action.payload,
+                stock:action.payload.stock,
+                loading:false
+            }
+        case GET_SECTORS:
+            return {
+                ...state,
+                sectors:action.payload.sectors,
                 loading:false
             }
     }

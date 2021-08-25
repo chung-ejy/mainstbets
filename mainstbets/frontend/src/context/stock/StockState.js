@@ -1,4 +1,4 @@
-import { GET_PREDICTION, SET_TICKER, SET_LOADING, STOP_LOADING, SET_ERROR, CLEAR_ERROR } from "./types";
+import { GET_TIMESERIES,GET_STOCK,GET_SECTORS, SET_LOADING, STOP_LOADING, SET_ERROR, CLEAR_ERROR } from "./types";
 import React, { useReducer } from "react";
 import StockContext from "./stockContext"
 import stockReducer from "./stockReducer"
@@ -6,8 +6,10 @@ import axios from "axios"
 
 const StockState = props => {
     const initialState = {
-        title: "Weekly Stock Price Prediction",
-        prediction: {"ticker":"MSFT","prediction":0,"adjClose":0,"delta":0,"score":0},
+        title: "Rolling Average Bro",
+        sectors: [],
+        timeseries: [],
+        stock:[],
         error:null,
         loading:false
     }
@@ -23,6 +25,7 @@ const StockState = props => {
             clearError()
         },5000);
     }
+
     const clearError = () => {
         dispatch({
             type:CLEAR_ERROR
@@ -41,36 +44,56 @@ const StockState = props => {
         });
     }
 
-    const setTicker = (ticker) => {
-        dispatch({
-            type:SET_TICKER,
-            payload: ticker
-        });
-    }
-
-    const getPrediction = (data) => {
+    const getSectors = () => {
         setLoading()
-        axios.post(`/api/`,data).then(res=>{
+        axios.post(`/api/sectors`).then(res=>{
             dispatch({
-                type:GET_PREDICTION,
+                type:GET_SECTORS,
                 payload:res.data
             })
         }).catch(err => {
             stopLoading()
             setError(err.message,"danger")
-            getPrediction(state.prediction)
+        });
+    }
+
+    const getStock = (data) => {
+        setLoading()
+        axios.post(`/api/stock`,data).then(res=>{
+            dispatch({
+                type:GET_STOCK,
+                payload:res.data
+            })
+        }).catch(err => {
+            stopLoading()
+            setError(err.message,"danger")
+        });
+    }
+
+    const getTimeSeries = () => {
+        setLoading()
+        axios.get(`/api/timeseries`).then(res=>{
+            dispatch({
+                type:GET_TIMESERIES,
+                payload:res.data
+            })
+        }).catch(err => {
+            stopLoading()
+            setError(err.message,"danger")
         });
     }
 
     return (
         <StockContext.Provider value={{
-            prediction:state.prediction,
+            sectors:state.sectors,
+            timeseries:state.timeseries,
+            stock:state.stock,
             loading:state.loading,
             error:state.error,
             title:state.title,
-            setError,
-            setTicker,
-            getPrediction
+            getSectors,
+            getStock,
+            getTimeSeries
         }}>
             {props.children}
         </StockContext.Provider>

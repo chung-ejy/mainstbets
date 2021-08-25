@@ -1,16 +1,18 @@
 import React, {useContext,useEffect,Fragment} from 'react';
 import StockContext from '../../context/stock/stockContext';
 import Alert from "../alerts/Alert"
-import Sentiment from '../sentiment/Sentiment';
+// import Sentiment from '../sentiment/Sentiment';
 import Form from '../stock/Form';
+import TimeSeries from '../stock/TimeSeries';
+import Stock from '../stock/Stock'
 const Stocks = () => {
     const stockContext = useContext(StockContext)
-    const {prediction,loading,getPrediction,title} = stockContext;
-    const {ticker} = prediction;
+    const {loading,getSectors,getTimeSeries,title,timeseries,sectors,stock} = stockContext;
     useEffect(() => {
-        getPrediction({"ticker":"MSFT"})
+        getTimeSeries()
+        // getSectors()
     },//eslint-disable-next-line
-    [title]
+    []
     );
     return (
         <div className="card mt-4">
@@ -26,11 +28,12 @@ const Stocks = () => {
                     </div>) : (
                         <Fragment>
                             <Alert />
-                            <h1 className="card-ticker text-center mx-2">
+                            {/* <h1 className="card-ticker text-center mx-2">
                             {ticker[0].toUpperCase() + ticker.slice(1)}
-                            </h1>
-                            <Sentiment prediction={prediction} />
-                            <Form prediction={prediction}/>
+                            </h1> */}
+                            <Stock data={stock}/>
+                            <Form />
+                            <TimeSeries timeseries={timeseries} />
                             <h3 className="text-center mx-2">
                                 Input a SP500 ticker
                             </h3>
