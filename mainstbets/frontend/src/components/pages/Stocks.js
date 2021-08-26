@@ -10,7 +10,7 @@ const Stocks = () => {
     const {loading,getSectors,getTimeSeries,title,timeseries,sectors,stock} = stockContext;
     useEffect(() => {
         getTimeSeries()
-        // getSectors()
+        getSectors()
     },//eslint-disable-next-line
     []
     );
