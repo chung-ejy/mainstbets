@@ -31,7 +31,7 @@ const Stocks = () => {
                             {/* <h1 className="card-ticker text-center mx-2">
                             {ticker[0].toUpperCase() + ticker.slice(1)}
                             </h1> */}
-                            <Stock data={stock}/>
+                            <Stock data={stock} sectors={sectors} timeseries={timeseries}/>
                             <Form />
                             <TimeSeries timeseries={timeseries} />
                             <h3 className="text-center mx-2">

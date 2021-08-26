@@ -23,14 +23,17 @@ client.close()
 @csrf_exempt
 def timeseries(request):
     complete = {}
-    complete["timeseries"] = list(ts.to_dict("records"))
+    ts["gain"] =[round(x,2) for x in ts["gain"]]
+    ts["rolling"] =[round(x,2) for x in ts["rolling"]]
+    ts["date"] =[str(x).split("T")[0].split(" ")[0] for x in ts["date"]]
+    complete["timeseries"] = list(ts.sort_values("gain",ascending=False).to_dict("records"))
     return JsonResponse(complete,safe=False)
 
 @csrf_exempt
 def sectors(request):
     complete = {}
     print(sector_list.columns)
-    complete["sectors"] = list(sector_list.to_dict("records"))
+    complete["sectors"] = list(sector_list.sort_values("Symbol",ascending=True).to_dict("records"))
     return JsonResponse(complete,safe=False)
 
 @csrf_exempt
