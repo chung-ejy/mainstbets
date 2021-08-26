@@ -1,8 +1,11 @@
 import React, { useContext,useState, Fragment } from 'react'
 import StockContext from '../../context/stock/stockContext'
-import { VictoryLine, VictoryChart, VictoryTheme } from 'victory'
+import { VictoryLine, VictoryChart, VictoryTheme, VictoryZoomContainer, VictoryLegend } from 'victory'
 const Stock = ({data,sectors,timeseries}) => {
-
+    const [state,setState] = useState({"zoomDomain":{"x":[new Date(2017,1,1),Date.now()]}})
+    const handleZoom = (domain) => {
+        setState({...state,["zoomDomain"]:domain})
+    }
     return (
         <div className="card card-body mt-4 mb-4">
             {data.length < 1 ? <div></div> :
@@ -13,26 +16,37 @@ const Stock = ({data,sectors,timeseries}) => {
 
             <VictoryChart
                 // theme={VictoryTheme.material}
+                containerComponent={
+                    <VictoryZoomContainer
+                    zoomDimension="x"
+                    zoomDomain={state.zoomDomain}
+                    onZoomDomainChange={handleZoom.bind(this)}
+                    />
+                }
                 >
                 <VictoryLine
                     style={{
-                    data: { stroke: "#c43a31" },
+                    data: { stroke: "maroon" },
                     parent: { border: "1px solid #ccc"}
                     }}
-                    data={data}
+                    data={data.map(d => ({...d,["date"]: Date.parse(d["date"])}))}
                     y="adjClose"
+                    x="date"
+                    scale={{"x":"time","y":"linear"}}
                 />
                 <VictoryLine
                     style={{
-                    data: { stroke: "blue" },
+                    data: { stroke: "navy   " },
                     parent: { border: "1px solid #ccc"}
                     }}
-                    samples={50}
-                    data={data}
-                   
+                    // samples={50}
+                    data={data.map(d => ({...d,["date"]: Date.parse(d["date"])}))}
                     y="rolling"
+                    x="date"
+                    scale={{"x":"time","y":"linear"}}
                 />
                 </VictoryChart>
+                {/* <div className="row"><div className="col" style={{color:"maroon"}}>Rolling</div><div style={{color:"navy"}}>Adj Close</div></div> */}
                 <table>
                     <tbody>
                     {["Symbol"
@@ -46,18 +60,19 @@ const Stock = ({data,sectors,timeseries}) => {
                         </tr>
                         )
                     )}
-                    {["rolling","adjClose","gain"].map(
-                        col => (
-                            <tr>
-                            <td>{col}</td>
-                            <td>{timeseries.filter(ts => ts["ticker"]==data[0]["ticker"])[0][col]}</td>
-                        </tr>
-                        )
-                    )}
+
                     <tr>
-                            <td>length</td>
-                            <td>{timeseries.length}</td>
-                        </tr>
+                        <td style={{color:"maroon"}}>{"rolling"}</td>
+                        <td style={{color:"maroon"}}>{timeseries.filter(ts => ts["ticker"]==data[0]["ticker"])[0]["rolling"]}</td>
+                    </tr>
+                    <tr>
+                        <td style={{color:"navy"}}>{"adjClose"}</td>
+                        <td style={{color:"navy"}}>{timeseries.filter(ts => ts["ticker"]==data[0]["ticker"])[0]["adjClose"]}</td>
+                    </tr>
+                    <tr>
+                        <td style={{color:`${timeseries.filter(ts => ts["ticker"]==data[0]["ticker"])[0]["gain"] > 0 ? "green" : "red"}`}}>{"gain"}</td>
+                        <td style={{color:`${timeseries.filter(ts => ts["ticker"]==data[0]["ticker"])[0]["gain"] > 0 ? "green" : "red"}`}}>{timeseries.filter(ts => ts["ticker"]==data[0]["ticker"])[0]["gain"]}</td>
+                    </tr>
                     </tbody>
                 </table>
                 </Fragment>

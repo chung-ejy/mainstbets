@@ -16,7 +16,7 @@ const TimeSeries = ({timeseries}) => {
     const defineSort = (e) => {
         e.preventDefault()
         console.log(e.target.id)
-        setState({...state,["sort"]:e.target.id,["order"]:order*-1})
+        setState({...state,["sort"]:e.target.id,["order"]:order*-1,["page"]:0})
     }
     const createRow =(stock) => {
         return (<tr>
