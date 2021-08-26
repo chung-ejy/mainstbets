@@ -1,4 +1,4 @@
-import { GET_TIMESERIES, GET_STOCK, GET_SECTORS, SET_LOADING, STOP_LOADING, SET_ERROR, CLEAR_ERROR } from "./types";
+import { SET_TICKER, GET_TIMESERIES, GET_STOCK, GET_SECTORS, SET_LOADING, STOP_LOADING, SET_ERROR, CLEAR_ERROR } from "./types";
 export default(state,action) => {
     switch(action.type) {
         case SET_ERROR:
@@ -16,6 +16,12 @@ export default(state,action) => {
                 ...state,
                 loading:true
             }
+        case SET_TICKER:
+            return {
+                ...state,
+                ticker:action.payload.ticker,
+                loading:false
+            }
         case GET_TIMESERIES:
             return {
                 ...state,
@@ -28,6 +34,7 @@ export default(state,action) => {
                 stock:action.payload.stock,
                 loading:false
             }
+        
         case GET_SECTORS:
             return {
                 ...state,

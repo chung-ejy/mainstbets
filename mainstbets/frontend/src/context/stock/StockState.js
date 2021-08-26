@@ -1,4 +1,4 @@
-import { GET_TIMESERIES,GET_STOCK,GET_SECTORS, SET_LOADING, STOP_LOADING, SET_ERROR, CLEAR_ERROR } from "./types";
+import { SET_TICKER,GET_TIMESERIES,GET_STOCK,GET_SECTORS, SET_LOADING, STOP_LOADING, SET_ERROR, CLEAR_ERROR } from "./types";
 import React, { useReducer } from "react";
 import StockContext from "./stockContext"
 import stockReducer from "./stockReducer"
@@ -9,6 +9,7 @@ const StockState = props => {
         title: "Rolling Average Bro",
         sectors: [],
         timeseries: [],
+        ticker:"",
         stock:[],
         error:null,
         loading:false
@@ -68,6 +69,15 @@ const StockState = props => {
             stopLoading()
             setError(err.message,"danger")
         });
+    }
+
+    const setTicker = (data) => {
+        setLoading()
+            dispatch({
+                type:SET_TICKER,
+                payload:data
+            })
+        stopLoading()
     }
 
     const getTimeSeries = () => {
