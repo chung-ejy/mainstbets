@@ -1,0 +1,13 @@
+High Level:
+    - more transferability between graphic and state
+    - Distinct Industry and Stock Pages
+Graphic:
+    fix loading speeds for zoom function!!!!!
+    - Fix axis labels
+    - better synced styling
+    Stock
+    - price labels on mouseover
+    Industry
+    - better labels
+Table:
+    - fix strange spacing bug
