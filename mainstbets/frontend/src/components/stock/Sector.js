@@ -15,13 +15,19 @@ const Sector = ({sector}) => {
             </h5>
 
             <VictoryChart
-                theme={VictoryTheme.material}>
+            containerComponent={<VictoryZoomContainer
+                zoomDimension="x"
+                zoomDomain={state.zoomDomain}
+                onZoomDomainChange={handleZoom.bind(this)}
+                />}
+                >
                 <VictoryScatter
                     style={{
-                    data: { stroke: "navy   " },
+                    data: { fill: ({datum}) => datum.gain  > 0 ? "green" : "red" },
                     parent: { border: "1px solid #ccc"}
                     }}
-                    labels={({datum}) => datum.ticker}
+                    symbol={({ datum }) => datum.gain > 0 ? "triangleUp" : "triangleDown"}
+                    labels={({datum}) => [datum.ticker,datum.gain]}
                     labelComponent={
                         <VictoryTooltip/>
                       }

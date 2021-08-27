@@ -31,7 +31,7 @@ export default(state,action) => {
         case GET_STOCK:
             return {
                 ...state,
-                stock:action.payload.stock,
+                stock:action.payload.stock.map(d => ({...d,["date"]: Date.parse(d["date"])})),
                 loading:false
             }
         

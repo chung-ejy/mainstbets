@@ -26,7 +26,7 @@ const Stock = ({data,sectors,timeseries}) => {
                     data: { stroke: "maroon" },
                     parent: { border: "1px solid #ccc"}
                     }}
-                    data={data.map(d => ({...d,["date"]: Date.parse(d["date"])}))}
+                    data={data}
                     y="adjClose"
                     x="date"
                     scale={{"x":"time","y":"linear"}}
@@ -37,14 +37,14 @@ const Stock = ({data,sectors,timeseries}) => {
                     parent: { border: "1px solid #ccc"}
                     }}
                     // samples={50}
-                    data={data.map(d => ({...d,["date"]: Date.parse(d["date"])}))}
+                    data={data}
                     y="rolling"
                     x="date"
                     scale={{"x":"time","y":"linear"}}
                 />
                 </VictoryChart>
                 {/* <div className="row"><div className="col" style={{color:"maroon"}}>Rolling</div><div style={{color:"navy"}}>Adj Close</div></div> */}
-                <table>
+                <table className="table table-responsive-sm">
                     <tbody>
                     {["Symbol"
                     ,"Security"
