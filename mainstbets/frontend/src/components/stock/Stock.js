@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react'
-import { VictoryLine, VictoryChart,VictoryZoomContainer} from 'victory'
+import { VictoryLine, VictoryChart,VictoryZoomContainer, VictoryAxis} from 'victory'
 const Stock = ({data,sectors,timeseries}) => {
     const [state,setState] = useState({"zoomDomain":{"x":[new Date(2017,1,1),Date.now()]}})
     const handleZoom = (domain) => {
@@ -41,6 +41,7 @@ const Stock = ({data,sectors,timeseries}) => {
                     y="rolling"
                     x="date"
                     scale={{"x":"time","y":"linear"}}
+                    
                 />
                 </VictoryChart>
                 {/* <div className="row"><div className="col" style={{color:"maroon"}}>Rolling</div><div style={{color:"navy"}}>Adj Close</div></div> */}

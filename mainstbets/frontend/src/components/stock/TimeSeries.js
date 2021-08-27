@@ -37,9 +37,9 @@ const TimeSeries = ({timeseries}) => {
     const {page,ticker,sort,order,sector,security,search} = state
     return (
         <div className="card card-body mt-4 mb-4">
-            {/* <h5 class="card-title text-center mb-1">
-                {Date.now()}
-            </h5> */}
+            <h5 class="card-title text-center mb-1">
+                {new Date().toDateString()}
+            </h5>
             <table className="table table-responsive-sm">
                 <tbody>
                     <tr>

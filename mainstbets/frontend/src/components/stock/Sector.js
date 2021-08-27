@@ -2,7 +2,7 @@ import React, { useContext,useState, Fragment } from 'react'
 import StockContext from '../../context/stock/stockContext'
 import { VictoryScatter, VictoryChart, VictoryTheme, VictoryZoomContainer, VictoryLegend, VictoryLabel, VictoryTooltip } from 'victory'
 const Sector = ({sector}) => {
-    const [state,setState] = useState({"zoomDomain":{"x":[0,5000]}})
+    const [state,setState] = useState({"zoomDomain":{"x":[0,Math.max(...sector.map(s =>s["adjClose"]))]}})
     const handleZoom = (domain) => {
         setState({...state,["zoomDomain"]:domain})
     }
