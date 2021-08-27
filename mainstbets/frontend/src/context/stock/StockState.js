@@ -1,4 +1,4 @@
-import { SET_TICKER,GET_TIMESERIES,GET_STOCK,GET_SECTORS, SET_LOADING, STOP_LOADING, SET_ERROR, CLEAR_ERROR } from "./types";
+import { GET_SECTOR, SET_TICKER,GET_TIMESERIES,GET_STOCK,GET_SECTORS, SET_LOADING, STOP_LOADING, SET_ERROR, CLEAR_ERROR } from "./types";
 import React, { useReducer } from "react";
 import StockContext from "./stockContext"
 import stockReducer from "./stockReducer"
@@ -11,6 +11,7 @@ const StockState = props => {
         timeseries: [],
         ticker:"",
         stock:[],
+        sector:[],
         error:null,
         loading:false
     }
@@ -50,6 +51,19 @@ const StockState = props => {
         axios.post(`/api/sectors`).then(res=>{
             dispatch({
                 type:GET_SECTORS,
+                payload:res.data
+            })
+        }).catch(err => {
+            stopLoading()
+            setError(err.message,"danger")
+        });
+    }
+
+    const getSector = (data) => {
+        setLoading()
+        axios.post(`/api/sector`,data).then(res=>{
+            dispatch({
+                type:GET_SECTOR,
                 payload:res.data
             })
         }).catch(err => {
@@ -101,6 +115,8 @@ const StockState = props => {
             loading:state.loading,
             error:state.error,
             title:state.title,
+            sector:state.sector,
+            getSector,
             getSectors,
             getStock,
             getTimeSeries

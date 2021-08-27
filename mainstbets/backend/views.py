@@ -20,13 +20,14 @@ data = table.find(show_record_id=False)
 sector_list = pd.DataFrame(list(data)).drop("_id",axis=1)[["Symbol","Security","GICS Sector"]]
 client.close()
 
+ts = ts.merge(sector_list.rename(columns={"Symbol":"ticker"}),on="ticker",how="left")
 @csrf_exempt
 def timeseries(request):
     complete = {}
     ts["gain"] =[round(x,2) for x in ts["gain"]]
     ts["rolling"] =[round(x,2) for x in ts["rolling"]]
     ts["date"] =[str(x).split("T")[0].split(" ")[0] for x in ts["date"]]
-    complete["timeseries"] = list(ts.sort_values("gain",ascending=False).to_dict("records"))
+    complete["timeseries"] = list(ts[["GICS Sector","Security","ticker","adjClose","rolling","gain"]].sort_values("gain",ascending=False).to_dict("records"))
     return JsonResponse(complete,safe=False)
 
 @csrf_exempt
@@ -50,4 +51,22 @@ def stock(request):
     except Exception as e:
         print(str(e))
         complete = {"stock":[]}
+    return JsonResponse(complete,safe=False)
+
+@csrf_exempt
+def sector(request):
+    data = json.loads(request.body.decode("utf-8"))
+    try:
+        industry = data["sector"]
+        # db = client["mainstbets"]
+        # table = db["full"]
+        # data = table.find(show_record_id=False)
+        # ticker_data = pd.DataFrame(list(data)).drop("_id",axis=1)
+        # ticker_data.merge(sector_list.rename(columns={"Symbol":"ticker"}),on="ticker",how="left")
+        industry_data = ts[ts["GICS Sector"]==industry]
+        complete = {}
+        complete["sector"] = list(industry_data.to_dict("records"))
+    except Exception as e:
+        print(str(e))
+        complete = {"sector":[]}
     return JsonResponse(complete,safe=False)

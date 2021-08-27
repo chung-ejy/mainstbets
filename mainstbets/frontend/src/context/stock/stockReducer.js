@@ -1,4 +1,4 @@
-import { SET_TICKER, GET_TIMESERIES, GET_STOCK, GET_SECTORS, SET_LOADING, STOP_LOADING, SET_ERROR, CLEAR_ERROR } from "./types";
+import { GET_SECTOR, SET_TICKER, GET_TIMESERIES, GET_STOCK, GET_SECTORS, SET_LOADING, STOP_LOADING, SET_ERROR, CLEAR_ERROR } from "./types";
 export default(state,action) => {
     switch(action.type) {
         case SET_ERROR:
@@ -41,5 +41,12 @@ export default(state,action) => {
                 sectors:action.payload.sectors,
                 loading:false
             }
+        
+        case GET_SECTOR:
+        return {
+            ...state,
+            sector:action.payload.sector,
+            loading:false
+        }
     }
 }
