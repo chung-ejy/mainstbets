@@ -1,6 +1,5 @@
-import React, { useContext,useState, Fragment } from 'react'
-import StockContext from '../../context/stock/stockContext'
-import { VictoryLine, VictoryChart, VictoryTheme, VictoryZoomContainer, VictoryLegend } from 'victory'
+import React, { useState, Fragment } from 'react'
+import { VictoryLine, VictoryChart,VictoryZoomContainer} from 'victory'
 const Stock = ({data,sectors,timeseries}) => {
     const [state,setState] = useState({"zoomDomain":{"x":[new Date(2017,1,1),Date.now()]}})
     const handleZoom = (domain) => {
@@ -15,9 +14,7 @@ const Stock = ({data,sectors,timeseries}) => {
             </h5>
 
             <VictoryChart
-                // theme={VictoryTheme.material}
-                containerComponent={
-                    <VictoryZoomContainer
+                containerComponent={<VictoryZoomContainer
                     zoomDimension="x"
                     zoomDomain={state.zoomDomain}
                     onZoomDomainChange={handleZoom.bind(this)}

@@ -15,25 +15,7 @@ const Sector = ({sector}) => {
             </h5>
 
             <VictoryChart
-                theme={VictoryTheme.material}
-                // containerComponent={
-                //     <VictoryZoomContainer
-                //     zoomDimension="x"
-                //     zoomDomain={state.zoomDomain}
-                //     onZoomDomainChange={handleZoom.bind(this)}
-                //     />
-                // }
-                >
-                {/* <VictoryLine
-                    style={{
-                    data: { stroke: "maroon" },
-                    parent: { border: "1px solid #ccc"}
-                    }}
-                    data={data.map(d => ({...d,["date"]: Date.parse(d["date"])}))}
-                    y="adjClose"
-                    x="date"
-                    scale={{"x":"time","y":"linear"}}
-                /> */}
+                theme={VictoryTheme.material}>
                 <VictoryScatter
                     style={{
                     data: { stroke: "navy   " },
@@ -50,33 +32,6 @@ const Sector = ({sector}) => {
                     scale={{"x":"linear","y":"linear"}}
                 />
                 </VictoryChart>
-                {/* <div className="row"><div className="col" style={{color:"maroon"}}>Rolling</div><div style={{color:"navy"}}>Adj Close</div></div> */}
-                {/* <table>
-                    <tbody>
-                    {["GICS Sector"
-                ].map(
-                        column => (
-                        <tr>
-                            <td>{column}</td>
-                            <td>{sectors.filter(s => s["Symbol"] == data[0]["ticker"])[0][column]}</td>
-                        </tr>
-                        )
-                    )}
-
-                    <tr>
-                        <td style={{color:"maroon"}}>{"rolling"}</td>
-                        <td style={{color:"maroon"}}>{timeseries.filter(ts => ts["ticker"]==data[0]["ticker"])[0]["rolling"]}</td>
-                    </tr>
-                    <tr>
-                        <td style={{color:"navy"}}>{"adjClose"}</td>
-                        <td style={{color:"navy"}}>{timeseries.filter(ts => ts["ticker"]==data[0]["ticker"])[0]["adjClose"]}</td>
-                    </tr>
-                    <tr>
-                        <td style={{color:`${timeseries.filter(ts => ts["ticker"]==data[0]["ticker"])[0]["gain"] > 0 ? "green" : "red"}`}}>{"gain"}</td>
-                        <td style={{color:`${timeseries.filter(ts => ts["ticker"]==data[0]["ticker"])[0]["gain"] > 0 ? "green" : "red"}`}}>{timeseries.filter(ts => ts["ticker"]==data[0]["ticker"])[0]["gain"]}</td>
-                    </tr>
-                    </tbody>
-                </table> */}
                 </Fragment>
             }
         </div>

@@ -25,7 +25,7 @@ const SectorForm = () => {
                     ))}
                 </select>
                 <div className="form-group">
-                    <button type="submit" class="btn btn-primary form-control">Predict</button>
+                    <button type="submit" class="btn btn-primary form-control">Analyze</button>
                 </div>
             </form>
     )

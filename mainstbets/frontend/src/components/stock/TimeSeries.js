@@ -3,7 +3,7 @@ import StockContext from '../../context/stock/stockContext'
 
 const TimeSeries = ({timeseries}) => {
     const stockContext = useContext(StockContext)
-    const {loading,getStock} = stockContext
+    const {loading,getStock,getSector} = stockContext
     const [state,setState] = useState({"page":0,"ticker":"","search":"ticker","GICS Sector":"","Security":"","sort":"","order":1})
     const onChange = (e) => {
         e.preventDefault()
@@ -16,6 +16,7 @@ const TimeSeries = ({timeseries}) => {
     const onClick = (e) => {
         e.preventDefault()
         getStock({"ticker":e.target.id})
+        getSector({"sector":timeseries.filter(ts["ticker"]==e.target.id)[0]["GICS Sector"]})
     }
     const defineSort = (e) => {
         e.preventDefault()
@@ -28,7 +29,7 @@ const TimeSeries = ({timeseries}) => {
                 {Object.keys(stock).map(k => (
                     k == "GICS Sector" || k == "Security" 
                     ? <td className="d-none d-md-table-cell" id={stock[k]}>{stock[k]}</td> :
-                    k =="ticker"? <td className="d-block-table-cell" style={{textDecoration:"underline",textDecorationColor:"blue"}} onClick={onClick} id={stock[k]}>{stock[k]}</td>
+                    k =="ticker"? <td className="d-block-table-cell" style={{color:"navy",textDecoration:"underline"}} onClick={onClick} id={stock[k]}>{stock[k]}</td>
                     :<td className="d-block-table-cell" id={stock[k]}>{stock[k]}</td>
                 ))}
             </tr>)
@@ -42,9 +43,10 @@ const TimeSeries = ({timeseries}) => {
             <table className="table table-responsive-sm">
                 <tbody>
                     <tr>
+                    {/* <th className="d-none d-sm-table-cell d-md-none"></th> */}
                         <th className="d-none d-md-table-cell">            
                             <form>
-                            <div className="form-group-inline d-none d-md-table-cell">
+                            <div className="form-group-inline d-none d-md-table-cell text-center">
                                 <input style={{border:0
                                             ,fontFamily:"inherit"
                                             ,padding:0

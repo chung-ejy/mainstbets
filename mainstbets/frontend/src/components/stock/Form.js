@@ -28,7 +28,7 @@ const Form = () => {
                     name="ticker" placeholder="ticker" type="text" value={ticker} />
                 </div> */}
                 <div className="form-group">
-                    <button type="submit" class="btn btn-primary form-control">Predict</button>
+                    <button type="submit" class="btn btn-primary form-control">Analyze</button>
                 </div>
             </form>
     )

@@ -27,13 +27,13 @@ const Stocks = () => {
     const {level} = state
     return (
         <div className="card mt-4">
-            <div className="card-body align-content-center justify-content-center">
+            <div className="card-body align-content-center justify-content-center text-center">
                 {loading || title.size < 1 ? (
                     <div className="container justify-content-center">
                         <h3 className="text-center">
                             <i className="fas fa-spinner text-primary fa-7x"></i>
                         </h3>
-                        <h3 className="text-center mt-3">
+                        <h3 className="text-center mt-3 text-primary">
                             {"LOADING"}
                         </h3>
                     </div>) : (
@@ -48,7 +48,13 @@ const Stocks = () => {
                                 <Sector sector={sector}/>
                                 <SectorForm/>
                             </Fragment> }
-                            <button onClick={changeLevel}>{level == 1 ? "Stock Analysis" : "Industry Analysis"}</button>
+                            <form>
+                                <div className="form-group">
+                                <button type="button" className="btn btn-outline-primary btn-block mt-1 form-control"
+                                onClick={changeLevel}>{level == 1 ? "Stock Analysis" : "Industry Analysis"}</button>
+                                </div>
+                            </form>
+                             
                             <TimeSeries timeseries={timeseries} /> 
                         </Fragment>
 
