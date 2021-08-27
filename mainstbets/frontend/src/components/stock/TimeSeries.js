@@ -9,6 +9,10 @@ const TimeSeries = ({timeseries}) => {
         e.preventDefault()
         setState({...state,[e.target.name]:e.target.value,["search"]:e.target.name})
     }
+    const onNextPage = (e) => {
+        e.preventDefault()
+        setState({...state,[e.target.name]:e.target.value})
+    }
     const onClick = (e) => {
         e.preventDefault()
         getStock({"ticker":e.target.id})
@@ -20,10 +24,12 @@ const TimeSeries = ({timeseries}) => {
     }
     const createRow =(stock) => {
         return (<tr>
+                <td className="d-none d-sm-table-cell d-md-none"></td>
                 {Object.keys(stock).map(k => (
                     k == "GICS Sector" || k == "Security" 
-                    ? <td className="d-none d-md-table-cell" id={stock[k]} onClick={onClick}>{stock[k]}</td> 
-                    : <td id={stock[k]} onClick={onClick}>{stock[k]}</td>
+                    ? <td className="d-none d-md-table-cell" id={stock[k]}>{stock[k]}</td> :
+                    k =="ticker"? <td className="d-block-table-cell" style={{textDecoration:"underline",textDecorationColor:"blue"}} onClick={onClick} id={stock[k]}>{stock[k]}</td>
+                    :<td className="d-block-table-cell" id={stock[k]}>{stock[k]}</td>
                 ))}
             </tr>)
     } 
@@ -38,7 +44,7 @@ const TimeSeries = ({timeseries}) => {
                     <tr>
                         <th className="d-none d-md-table-cell">            
                             <form>
-                            <div className="form-group-inline">
+                            <div className="form-group-inline d-none d-md-table-cell">
                                 <input style={{border:0
                                             ,fontFamily:"inherit"
                                             ,padding:0
@@ -50,7 +56,7 @@ const TimeSeries = ({timeseries}) => {
                         </th>
                         <th>            
                             <form className="d-none d-md-table-cell">
-                            <div className="form-group-inline">
+                            <div className="form-group-inline d-none d-md-table-cell">
                                 <input style={{border:0
                                             ,fontFamily:"inherit"
                                             ,padding:0
@@ -60,7 +66,7 @@ const TimeSeries = ({timeseries}) => {
                             </div>
                             </form>
                         </th>
-                        <th>            
+                        <th className="d-block-table-cell">            
                             <form>
                             <div className="form-group-inline">
                                 <input style={{border:0
@@ -72,9 +78,9 @@ const TimeSeries = ({timeseries}) => {
                             </div>
                             </form>
                         </th>
-                        <th id="adjClose" onClick={defineSort}>Adj Close</th>
-                        <th id="rolling" onClick={defineSort}>Rolling 100</th>
-                        <th id="gain" onClick={defineSort}>Gain</th>
+                        <th id="adjClose" className="d-block-table-cell" onClick={defineSort}>Adj Close</th>
+                        <th id="rolling" className="d-block-table-cell" onClick={defineSort}>Rolling 100</th>
+                        <th id="gain" className="d-block-table-cell" onClick={defineSort}>Gain</th>
                     </tr>
                 {loading ? <tr></tr> : timeseries.filter(ts => ts[search].includes(state[search])).length == 0 
                         ?  timeseries.sort((a,b) => (a[sort] - b[sort]) * order).slice(Number(page)*10,(Number(page)+1)*10).map(stock => createRow(stock)) 
@@ -84,7 +90,7 @@ const TimeSeries = ({timeseries}) => {
             </table>
             <form>
             <div className="form-group">
-                <input onChange={onChange} className="form-control" 
+                <input onChange={onNextPage} className="form-control" 
                 name="page" placeholder={0} type="number" min={0} max={50} value={state.page} />
             </div>
             <h5 class="card-title text-center mb-1">

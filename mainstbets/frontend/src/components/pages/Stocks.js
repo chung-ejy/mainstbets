@@ -10,7 +10,7 @@ import SectorForm from '../stock/SectorForm';
 const Stocks = () => {
     const stockContext = useContext(StockContext)
     const {loading,getSectors,getTimeSeries,title,timeseries,sectors,stock,sector} = stockContext;
-    const [state,setState] = useState({"level":-1})
+    const [state,setState] = useState({"level":1})
     useEffect(() => {
         getTimeSeries()
         getSectors()
