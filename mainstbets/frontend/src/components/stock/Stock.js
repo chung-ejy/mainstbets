@@ -60,12 +60,12 @@ const Stock = ({data,sectors,timeseries}) => {
                     )}
 
                     <tr>
-                        <td style={{color:"maroon"}}>{"rolling"}</td>
-                        <td style={{color:"maroon"}}>{timeseries.filter(ts => ts["ticker"]==data[0]["ticker"])[0]["rolling"]}</td>
+                        <td style={{color:"navy"}}>{"rolling"}</td>
+                        <td style={{color:"navy"}}>{timeseries.filter(ts => ts["ticker"]==data[0]["ticker"])[0]["rolling"]}</td>
                     </tr>
                     <tr>
-                        <td style={{color:"navy"}}>{"adjClose"}</td>
-                        <td style={{color:"navy"}}>{timeseries.filter(ts => ts["ticker"]==data[0]["ticker"])[0]["adjClose"]}</td>
+                        <td style={{color:"maroon"}}>{"adjClose"}</td>
+                        <td style={{color:"maroon"}}>{timeseries.filter(ts => ts["ticker"]==data[0]["ticker"])[0]["adjClose"]}</td>
                     </tr>
                     <tr>
                         <td style={{color:`${timeseries.filter(ts => ts["ticker"]==data[0]["ticker"])[0]["gain"] > 0 ? "green" : "red"}`}}>{"gain"}</td>
