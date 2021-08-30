@@ -1,0 +1,1 @@
+web: gunicorn --chdir mainstbets mainstbets.wsgi
