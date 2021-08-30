@@ -6,4 +6,3 @@ node_modules/
 */__pycache__/*
 *.ipynb_checkpoints*
 *db.sqlite3*
-*ml/*
