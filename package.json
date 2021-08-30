@@ -1,7 +1,7 @@
 {
   "name": "mainstbets",
   "version": "1.0.0",
-  "description": "djangoreactboiler",
+  "description": "mainstbets",
   "main": "index.js",
   "scripts": {
     "dev": "webpack --mode development --watch ./mainstbets/frontend/src/index.js --output-path ./mainstbets/frontend/static/frontend/",
