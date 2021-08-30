@@ -56,6 +56,12 @@ const Stocks = () => {
                             </form>
                              
                             <TimeSeries timeseries={timeseries} /> 
+                            <nav class="navbar fixed-bottom item-center navbar-light bg-light">
+                            <div class="container-fluid">
+                                <a class="navbar-brand mx-auto" href="#">DISCLAIMER: EDUCATIONAL PURPOSES ONLY</a>
+                            </div>
+                                
+                            </nav>
                         </Fragment>
 
                     )
