@@ -6,10 +6,13 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime, timedelta
 from pymongo import MongoClient
-# Create your views here.
-
+import certifi
+import os
+load_dotenv()
+token = os.getenv("MONGO_URI")
+# Create your views here
 ## initial loading
-client = MongoClient("localhost",27017)
+client = MongoClient(token,tlsCAFile=certifi.where())
 db = client["mainstbets"]
 table = db["recent"]
 data = table.find(show_record_id=False)
@@ -58,11 +61,6 @@ def sector(request):
     data = json.loads(request.body.decode("utf-8"))
     try:
         industry = data["sector"]
-        # db = client["mainstbets"]
-        # table = db["full"]
-        # data = table.find(show_record_id=False)
-        # ticker_data = pd.DataFrame(list(data)).drop("_id",axis=1)
-        # ticker_data.merge(sector_list.rename(columns={"Symbol":"ticker"}),on="ticker",how="left")
         industry_data = ts[ts["GICS Sector"]==industry]
         complete = {}
         complete["sector"] = list(industry_data.to_dict("records"))

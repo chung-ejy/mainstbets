@@ -1,7 +1,11 @@
 from pymongo import MongoClient, DESCENDING
 import pandas as pd
 from database.idatabase import IDatabase
-
+from dotenv import load_dotenv
+import os
+import certifi
+load_dotenv()
+token = os.getenv("MONGO_URI")
 class ADatabase(IDatabase):
     
     def __init__(self,name):
@@ -9,7 +13,7 @@ class ADatabase(IDatabase):
         super().__init__()
     
     def connect(self):
-        self.client = MongoClient("localhost",27017)
+        self.client = MongoClient(token,tlsCAFile=certifi.where())
     
     def disconnect(self):
         self.client.close()
