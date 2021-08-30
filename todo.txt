@@ -9,5 +9,8 @@ Graphic:
     - price labels on mouseover
     Industry
     - better labels
-Table:
+Table:  
     - fix strange spacing bug
+
+ML:
+    - try to fix up machine learning algos
