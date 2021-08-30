@@ -95,9 +95,9 @@ const TimeSeries = ({timeseries}) => {
                 <input onChange={onNextPage} className="form-control" 
                 name="page" placeholder={0} type="number" min={0} max={50} value={state.page} />
             </div>
-            <h5 class="card-title text-center mb-1">
+            {/* <h5 class="card-title text-center mb-1">
                     {`${page*10} to ${(page+1)*10}`}
-            </h5>
+            </h5> */}
             </form>
         </div>
     )
