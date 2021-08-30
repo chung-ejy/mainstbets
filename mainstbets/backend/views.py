@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime, timedelta
 from pymongo import MongoClient
 import certifi
+from dotenv import load_dotenv
 import os
 load_dotenv()
 token = os.getenv("MONGO_URI")
